@@ -2,10 +2,13 @@ package com.example.android.transition2;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.ChangeBounds;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
     public void handleTouch() {
         View view = findViewById(R.id.button);
 
-        TransitionManager.beginDelayedTransition(mViewGroup);
+        Transition changeBoundsTransition = new ChangeBounds();
+        changeBoundsTransition.setDuration(3000);
+        changeBoundsTransition.setInterpolator(new BounceInterpolator());
+
+        TransitionManager.beginDelayedTransition(mViewGroup, changeBoundsTransition);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
