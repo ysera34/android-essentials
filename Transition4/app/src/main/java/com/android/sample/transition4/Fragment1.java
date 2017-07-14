@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -26,6 +28,7 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
     }
 
     private TextView mTransitionTextView;
+    private LinearLayout mTransitionLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         mTransitionTextView = (TextView) view.findViewById(R.id.transition_text_view);
         mTransitionTextView .setOnClickListener(this);
+        mTransitionLayout = (LinearLayout) view.findViewById(R.id.transition_layout);
+        mTransitionLayout.setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +59,15 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                         getActivity(), mTransitionTextView, "transition_text_view");
                 startActivity(intent, options.toBundle());
+                break;
+            case R.id.transition_layout:
+                Intent intent2 = new Intent(getActivity(), Main2Activity.class);
+                ActivityOptions options2 = ActivityOptions.makeSceneTransitionAnimation(
+                        getActivity(),
+                        Pair.create((View) mTransitionLayout, "transition_text_view"),
+                        Pair.create((View) mTransitionTextView, "transition_layout"));
+
+                startActivity(intent2, options2.toBundle());
                 break;
         }
     }
